@@ -81,6 +81,31 @@
       $todos = $request->user()->todos()->latest()->get();
     ```
 
+-   Laravel içerisine bootstrap dahil etmek istersek.
+
+    ```
+      php artisan ui bootstrap
+    ```
+
+-   Laravel içerisine vue dahil etmek istersek.
+
+    ```
+      php artisan ui vue
+    ```
+
+-   Vue.js'i kurduktan sonra
+
+    1- webpack.mix.js dosyasında
+
+    ````
+      mix.js("resources/js/app.js", "public/js")
+      .sass("resources/sass/app.scss", "public/css")
+      .version();
+    ```
+    2 - vuetest.blade.php'de asset olarak verdiğimiz app.js'i `<script src="{{ mix('js/app.js') }}"></script>` olarak değiştirmeliyiz.
+    3 - `npm run watch`
+    ````
+
 ## Bakılması Gereken Konular
 
 -   Bağımlılık sızdırma ( dependices injection )

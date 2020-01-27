@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::view('vuetest', 'vuetest');
 
 Route::get('/', function () {
     return view('welcome');
