@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\TodoItem;
-use Carbon\Carbon;
 
-class TodoItemController extends Controller
+class TodoController extends Controller
 {
     public function index(Request $request)
     {
-        $todos = $request->user()->todos;
-        return view('home', ['todos' => $todos]);
+        return $request->user()->todos;
     }
 
     public function toggle(TodoItem $todo, Request $request)
@@ -19,7 +18,7 @@ class TodoItemController extends Controller
         if ($request->user()->id !== $todo->user->id) return abort(403);
         $todo->toggle();
         $todo->save();
-        return redirect()->route('todos.all');
+        return $todo;
     }
 
     public function store(Request $request)
@@ -27,10 +26,10 @@ class TodoItemController extends Controller
         $request->validate([
             'todo' => 'required|string|min:3|max:250'
         ]);
-        $todo = new TodoItem;
-        $todo->user_id = $request->user()->id;
-        $todo->text = $request->todo;
+        $todo           = new TodoItem;
+        $todo->user_id  = $request->user()->id;
+        $todo->text     = $request->todo;
         $todo->save();
-        return redirect()->route('todos.all');
+        return $todo;
     }
 }

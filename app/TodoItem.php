@@ -14,4 +14,10 @@ class TodoItem extends Model
             $this->completed_at = now()->toDateTimeString();
         }
     }
+
+    // todoItem bir kullanıcıya aittir.
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

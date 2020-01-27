@@ -40,18 +40,55 @@
       composer require laravel/ui --dev
     ```
 
-Bağımlılık yüklendikten sonra laravel projesini aut ile ayağa kaldırmak istersek.
-`php artisan ui bootstrap --auth`
-Bu işlemin ardından ise node modules dosyalarını indirmek için ise
-`npm install && npm run dev`
+    Bağımlılık yüklendikten sonra laravel projesini aut ile ayağa kaldırmak istersek.
+    `php artisan ui bootstrap --auth`
+    Bu işlemin ardından ise node modules dosyalarını indirmek için ise
+    `npm install && npm run dev`
+    Son olarak laraveli auth ile ayağa kaldırmak istersek.
 
-php artisan ui bootstrap --auth
+    `php artisan ui bootstrap --auth`
+
+-   Eğer migrate dosyasına herhangi bir field eklediysek `php artisan migrate:refresh` eklememiz gerekli.
+
+-   todoıtem modeline bir kullanıcıya ait olduğunu belirtmemiz için
+
+    ```
+          public function user()
+          {
+              // todoItem bir user'a aittir.
+              return $this->belongsTo(User::class);
+          }
+    ```
+
+    bir kullanıcının birden fazla todoItem'ı olabilir diyoruz.
+
+    ```
+        public function todos()
+        {
+          return $this->hasMany(TodoItem::class);
+        }
+    ```
+
+-   İlgili kullanıcıya ait todoları direk bize verir
+
+    ```
+      $todos = $request->user()->todos;
+    ```
+
+    lakin aşağıdaki gibi method ile çağırırsak query builderçalıştırmış oluyoruz. ardından methodları kullanıp datayı o haldede alabiliriz.
+
+    ```
+      $todos = $request->user()->todos()->latest()->get();
+    ```
 
 ## Bakılması Gereken Konular
 
--   bağımlılık sızdırma ( dependices injection )
--   laravel container yapısı
--   service container, service providers
+-   Bağımlılık sızdırma ( dependices injection )
+-   Laravel container yapısı
+-   Service container, service providers
+-   Middleware ( soğan örneği )
+-   Authorization
+-   API tarafında ki token bazlı yetkilendirmeyi jwt-auth kütüphanesini kullanarak aşacağız.
 
 ## Önerilen Kaynaklar
 
@@ -60,6 +97,7 @@ php artisan ui bootstrap --auth
 -   PHP için Bağımlılık Yöneticisi: [Composer](https://getcomposer.org/)
 -   PHP standartları için öneriler: <b>[PSR](https://www.php-fig.org/psr/)</b>
 -   [PHP magic methods](https://www.php.net/manual/tr/language.oop5.magic.php)
+-   API için token bazlı yetkilendirme [jwt-auth](https://jwt-auth.readthedocs.io/en/develop/)
 
 ## Karşılaşılan Hatalar ve Çözümleri
 
@@ -97,5 +135,13 @@ hostfile
 ```
 
 Ardından homestead proje folder'ında "homestead up --provision" komutunu çalıştırmamız yeterli.
+
+## Önemli Notlar
+
+### Laravel 6 sürümü ile jwt-auth kütüphanesini kullanacak uygulanması gereken adımlar
+
+composer.json dosyasına require alanına `"tymon/jwt-auth": "^1.0"` 1.0 ve üzerini çekmemiz gerekli.
+Sonrasında ise https://jwt-auth.readthedocs.io/en/develop/laravel-installation/ adımları takip edebiliriz. Tek dikkat edilmesi gereken nokta ise `composer require tymon/jwt-auth`
+komutu yerine `composer update` yapmalıyız. Çünkü relase sürümü laravel 6 sürümünü desteklememekte.
 
 [logo]: https://kamp.linux.org.tr/2020/kis/wp-content/themes/oyk-wp-theme/assets/images/okk2020logo.png "Kış Kampı Linux"

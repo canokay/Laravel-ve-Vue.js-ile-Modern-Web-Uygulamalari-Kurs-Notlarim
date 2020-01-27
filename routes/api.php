@@ -13,6 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// route group example:  asd.com/api/auth/login
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('login', 'API\AuthController@login');
+    Route::post('logout', 'API\AuthController@logout');
+    Route::post('refresh', 'API\AuthController@refresh');
+    Route::post('me', 'API\AuthController@me');
 });
+
+Route::get('todos', 'API\TodoController@index')->middleware(['auth:api']);
+Route::post('todos', 'API\TodoController@store')->middleware(['auth:api']);
+Route::put('todos/{todo}/toggle', 'API\TodoController@toggle')->middleware(['auth:api']);
