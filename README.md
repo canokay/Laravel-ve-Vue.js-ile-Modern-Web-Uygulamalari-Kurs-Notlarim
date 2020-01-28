@@ -125,6 +125,9 @@
 -   Middleware ( soğan örneği )
 -   Authorization
 -   API tarafında ki token bazlı yetkilendirmeyi jwt-auth kütüphanesini kullanarak aşacağız.
+-   State Yönetimi için vuex
+-   Vuex'teki istediğimiz herhangi bir state veya state'lerin kalıcı olmasını istiyorsak 'vuex-persistedstate' npm paketini kullanıyoruz.
+-   Rotalama için ise vue router
 
 ## Önerilen Kaynaklar
 
