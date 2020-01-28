@@ -26,9 +26,10 @@ class TodoController extends Controller
         $request->validate([
             'todo' => 'required|string|min:3|max:250'
         ]);
-        $todo           = new TodoItem;
-        $todo->user_id  = $request->user()->id;
-        $todo->text     = $request->todo;
+        $todo                =  new TodoItem;
+        $todo->user_id       =  $request->user()->id;
+        $todo->text          =  $request->todo;
+        $todo->completed_at  =  null;
         $todo->save();
         return $todo;
     }

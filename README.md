@@ -95,16 +95,27 @@
 
 -   Vue.js'i kurduktan sonra
 
-    1- webpack.mix.js dosyasında
+    1 - webpack.mix.js dosyasında
 
-    ````
-      mix.js("resources/js/app.js", "public/js")
-      .sass("resources/sass/app.scss", "public/css")
-      .version();
     ```
-    2 - vuetest.blade.php'de asset olarak verdiğimiz app.js'i `<script src="{{ mix('js/app.js') }}"></script>` olarak değiştirmeliyiz.
-    3 - `npm run watch`
-    ````
+        mix.js("resources/js/app.js", "public/js")
+        .sass("resources/sass/app.scss", "public/css")
+        .version();
+    ```
+
+    2 - vuetest.blade.php'de asset olarak verdiğimiz app.js'i
+
+    ```
+      <script src="{{ mix('js/app.js') }}"></script>
+    ```
+
+    olarak değiştirmeliyiz.
+
+    3 - son olarak vue daki yazdığımız değişiklikleri takip edebilmek için aşağıdaki kodu çalıştırıyoruz.
+
+    ```
+    `npm run watch`
+    ```
 
 ## Bakılması Gereken Konular
 
